@@ -6,6 +6,7 @@ use std::{
 };
 
 use rand::{rngs::OsRng, RngCore};
+use tracing::info;
 
 use itertools::Itertools;
 use slop_symmetric::CryptographicHasher;
@@ -76,7 +77,9 @@ pub fn get_cycles(elf: &[u8], stdin: &SP1Stdin) -> u64 {
         executor.with_input(buf);
     }
     while executor.execute_chunk().is_some() {}
-    executor.global_clk()
+    let cycles = executor.global_clk();
+    info!("zkVM cycles (RISC-V instructions): {}", cycles);
+    cycles
 }
 
 /// Load an ELF file from a given path.
