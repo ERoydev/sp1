@@ -266,6 +266,14 @@ pub async fn execute_with_options(
         final_report.invocation_tracker = invocation_tracker;
     }
 
+    // Diagnostic: report why cycle_tracker is or isn't filled (remove after debugging)
+    tracing::info!(
+        profiling_cfg = cfg!(feature = "profiling"),
+        cycle_tracker_len = final_report.cycle_tracker.len(),
+        cycle_tracker_keys = ?final_report.cycle_tracker.keys().collect::<Vec<_>>(),
+        "ExecutionReport.cycle_tracker state",
+    );
+
     // Extract the public value digest from the final VM state.
     let public_value_digest: [u8; 32] = final_vm_state
         .get()
