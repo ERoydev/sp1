@@ -224,6 +224,7 @@ impl SyscallContext for MinimalExecutor {
     fn cycle_tracker_report_end(&mut self, name: &str) -> Option<(u64, u32)> {
         self.cycle_tracker_starts.remove(name).map(|(start, depth)| {
             let cycles = self.global_clk.saturating_sub(start);
+            eprintln!("ASDADSADASDASDASDASDAS cycle_tracker_report_end: {name} {cycles}");
             // Accumulate to totals for ExecutionReport
             *self.cycle_tracker_totals.entry(name.to_string()).or_insert(0) += cycles;
             *self.invocation_tracker.entry(name.to_string()).or_insert(0) += 1;
