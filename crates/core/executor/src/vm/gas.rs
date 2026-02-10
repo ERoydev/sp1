@@ -58,6 +58,7 @@ impl ReportGenerator {
 
     /// Generate an `ExecutionReport` from the current state of the `ReportGenerator`
     pub fn generate_report(&self) -> ExecutionReport {
+        tracing::info!("Generating ExecutionReport");
         // Combine syscall_counts and deferred_syscall_counts
         let mut total_syscall_counts = self.syscall_counts;
         for (syscall_code, &count) in self.deferred_syscall_counts.iter() {
